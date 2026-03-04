@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform} from 'react-native';
 
@@ -6,7 +6,9 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform} from 'react
 export default function App() {
   const [relatorio,setRelatorio] = useState('');
   const [pinOperador, setPinOperador] = useState('');
-  
+  const [pesoCromo, setPesoCromo] = useState('');
+  const [pesoNiquel, setPesoNiquel] = useState('');
+  const [pesoTotal, setPesoTotal] = useState('');
   function enviarAlerta(){
     const MSG_OK = "Ok! Mensagem Enviada!!!"
     const MSG_ERRO = "ERRO!! Campos vazios encontrados!"
@@ -26,6 +28,11 @@ export default function App() {
       }
     }
   }
+
+  function calculaPesoTotal(){
+    
+  }
+
   return (
     <View style={styles.container}>
       <Text>TechAlloy - Controle de Produção</Text>
@@ -42,12 +49,33 @@ export default function App() {
       secureTextEntry={true}
       />
       <Button title ="ENVIAR ALERTA DE MANUTENÇÃO"
-      onPress={enviarAlerta}/>
+      onPress={enviarAlerta}
+      color= "#ff4444"/>
       <StatusBar style="auto" />
 
       <Text>Carga Cromo (kg)</Text>
+      <TextInput
+      placeholder="0,00"
+      value={pesoCromo}
+      onChangeText={setPesoCromo}
+      keyboardType='decimal-pad'
+      />
+
       <Text>Carga Niquel (kg)</Text>
+      <TextInput
+      placeholder="0,00"
+      value={pesoNiquel}
+      onChangeText={setPesoNiquel}
+      keyboardType='decimal-pad'
+      />
+
+      <Button
+      title="Calcula Total Peso"
+      onPress={calculaPesoTotal}
+      color="#4444ff"
+      />
       <Text>Total de Metais: </Text>
+
     </View>
   );
 }
