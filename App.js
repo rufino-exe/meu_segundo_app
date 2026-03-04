@@ -1,19 +1,29 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Alert} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, Platform} from 'react-native';
 
 
 export default function App() {
   const [relatorio,setRelatorio] = useState('');
   const [pinOperador, setPinOperador] = useState('');
   
-
   function enviarAlerta(){
+    const MSG_OK = "Ok! Mensagem Enviada!!!"
+    const MSG_ERRO = "ERRO!! Campos vazios encontrados!"
     if(relatorio !== "" && pinOperador !== ""){
-      Alert.alert("Ok! Mensagem enviada!!!")
+      if(Platform.OS === "web"){
+        alert(MSG_OK)
+      }
+      else{
+        Alert.alert(MSG_OK)
+      }
     }
-    else{
-      Alert.alert("FALTAM INFORMAÇÕES! POR FAVOR VERIFIQUE SE OS CAMPOS ESTÃO COMPLETOS")
+    else{if(Platform.OS === "web"){
+      alert(MSG_ERRO)
+    }
+      else{
+        Alert.alert(MSG_ERRO)
+      }
     }
   }
   return (
@@ -24,15 +34,20 @@ export default function App() {
       value={relatorio}
       onChangeText={setRelatorio}
       />
-      <Text>O valor da variável estado relatorio é: {relatorio}:</Text>
+      <Text>O valor da variável estado relatorio é: {relatorio}</Text>
       <Text>PIN de Segurnaça</Text>
       <TextInput placeholder="Digite o PIN"
       value={pinOperador}
       onChangeText={setPinOperador}
       secureTextEntry={true}
       />
-      <Button value={enviarAlerta}>OK</Button>
+      <Button title ="ENVIAR ALERTA DE MANUTENÇÃO"
+      onPress={enviarAlerta}/>
       <StatusBar style="auto" />
+
+      <Text>Carga Cromo (kg)</Text>
+      <Text>Carga Niquel (kg)</Text>
+      <Text>Total de Metais: </Text>
     </View>
   );
 }
